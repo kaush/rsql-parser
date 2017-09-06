@@ -90,12 +90,13 @@ TOKEN : {
 }
 
 TOKEN : {
-    < AND        : ( ";" | " and ") >
-  | < OR         : ( "," | " or " ) >
+    < AND        : ( ";" | " and " | " AND " | " And " ) >
+  | < OR         : ( "," | " or " | " OR " | " Or " ) >
   | < LPAREN     : "(" >
   | < RPAREN     : ")" >
   | < COMP_FIQL  : ( ( "=" (<ALPHA>)* ) | "!" ) "=" >
   | < COMP_ALT   : ( ">" | "<" ) ( "=" )? >
+  | < COMP_REG   : ( ( ( "~" | "!" ) ( "~" ) ("~")? ) | ( ( "!" )? ( "=~" ) ) ) >
 }
 
 
@@ -185,7 +186,7 @@ String Selector(): {}
 
 String Operator(): {}
 {
-    ( token = <COMP_FIQL> | token = <COMP_ALT> )
+    ( token = <COMP_FIQL> | token = <COMP_ALT> | token = <COMP_REG> )
     {
         return token.image;
     }
